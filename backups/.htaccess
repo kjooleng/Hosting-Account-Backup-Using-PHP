@@ -1,0 +1,59 @@
+# ============================================================================
+# Backup Directory Protection
+# Prevents direct web access to backup files and sensitive data
+# ============================================================================
+
+# Deny all access by default
+Order Deny,Allow
+Deny from all
+
+# ============================================================================
+# File-specific Protection
+# ============================================================================
+
+# Protect configuration file
+<Files "config.php">
+    Deny from all
+</Files>
+
+# Protect JSON state files
+<FilesMatch "\.(json)$">
+    Deny from all
+</FilesMatch>
+
+# Protect backup ZIP files
+<FilesMatch "^files_.*\.zip$">
+    Deny from all
+</FilesMatch>
+
+# Protect SQL backup files
+<FilesMatch "^database_.*\.sql$">
+    Deny from all
+</FilesMatch>
+
+# Protect htaccess itself
+<Files ".htaccess">
+    Deny from all
+</Files>
+
+# ============================================================================
+# Security Headers (Optional but Recommended)
+# ============================================================================
+
+# Prevent directory listing
+Options -Indexes
+
+# Disable script execution
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|cgi|pl|exe)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# ============================================================================
+# Notes
+# ============================================================================
+# - This file protects the entire backup directory from web access
+# - Only the parent backup.php script can access these files
+# - Test protection by trying to access: http://yoursite.com/backups/config.php
+# - You should see a 403 Forbidden error if protection is working
+# ============================================================================
