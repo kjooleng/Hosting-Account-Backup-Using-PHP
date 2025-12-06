@@ -1,0 +1,15 @@
+# Backup System - Ignore sensitive and generated files
+backups/config.php
+backups/*.json
+backups/*.zip
+backups/*.sql
+backups/.htaccess
+backups/web.config
+
+# Logs
+*.log
+error_log
+
+# System files
+.DS_Store
+Thumbs.db
